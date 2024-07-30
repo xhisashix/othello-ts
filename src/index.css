@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: green;
+  width: 800px;
+  height: 800px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #000;
+  height: 100px;
+  width: 100px;
+}
