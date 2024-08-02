@@ -10,3 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
   game.render();
 });
 
+document.getElementById("reset")?.addEventListener("click", () => {
+  game.initialize();
+  game.render();
+});
+
