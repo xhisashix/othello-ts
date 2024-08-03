@@ -54,7 +54,6 @@ class othello implements OthelloInterface {
    * @returns string | null
    */
   getWinner(): string | null {
-
     let blackCount = 0;
     let whiteCount = 0;
 
@@ -142,6 +141,19 @@ class othello implements OthelloInterface {
         currentPlayerElement.innerText = "White";
       }
     }
+
+    const [blackCount, whiteCount] = this.countPieces();
+
+    const blackCountElement = document.getElementById("black-count");
+    if (blackCountElement) {
+      blackCountElement.innerText = blackCount.toString();
+    }
+
+    const whiteCountElement = document.getElementById("white-count");
+
+    if (whiteCountElement) {
+      whiteCountElement.innerText = whiteCount.toString();
+    }
   }
 
   /**
@@ -223,6 +235,27 @@ class othello implements OthelloInterface {
       }
     }
     return false;
+  }
+
+  /**
+   * count the number of pieces
+   * @returns number, number
+   */
+  countPieces(): [number, number] {
+    let blackCount = 0;
+    let whiteCount = 0;
+
+    this.board.forEach((row) => {
+      row.forEach((cell) => {
+        if (cell === "B") {
+          blackCount++;
+        } else if (cell === "W") {
+          whiteCount++;
+        }
+      });
+    });
+
+    return [blackCount, whiteCount];
   }
 }
 

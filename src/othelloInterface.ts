@@ -58,6 +58,12 @@ interface OthelloInterface {
    * @returns void
    */
   isValidMove(row: number, col: number): boolean;
+
+  /**
+   * count the number of pieces
+   * @returns number, number
+   */
+  countPieces(): [number, number];
 }
 
 export default OthelloInterface;
