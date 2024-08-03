@@ -28,6 +28,25 @@ class othello implements OthelloInterface {
     ];
   }
 
+  private static readonly neighborOffsets = [
+    { row: -1, col: 0 },
+    { row: 1, col: 0 },
+    { row: 0, col: -1 },
+    { row: 0, col: 1 },
+    { row: -1, col: -1 },
+    { row: -1, col: 1 },
+    { row: 1, col: -1 },
+    { row: 1, col: 1 },
+  ];
+
+  /**
+   * Gets the neighbor offsets.
+   * @returns { row: number; col: number }[]
+   */
+  getNeighborOffsets(): { row: number; col: number }[] {
+    return othello.neighborOffsets;
+  }
+
   /**
    * Makes a move on the game board.
    * @param row The row of the move.
@@ -163,18 +182,9 @@ class othello implements OthelloInterface {
    * @returns void
    */
   flip(row: number, col: number): void {
-    const directions = [
-      { row: -1, col: 0 },
-      { row: 1, col: 0 },
-      { row: 0, col: -1 },
-      { row: 0, col: 1 },
-      { row: -1, col: -1 },
-      { row: -1, col: 1 },
-      { row: 1, col: -1 },
-      { row: 1, col: 1 },
-    ];
-
-    const currentPlayer = this.currentPlayer;
+    const currentPlayer: string = this.currentPlayer;
+    const directions: { row: number; col: number }[] =
+      this.getNeighborOffsets();
     directions.forEach((direction) => {
       let r = row + direction.row;
       let c = col + direction.col;
@@ -203,18 +213,9 @@ class othello implements OthelloInterface {
   }
 
   isValidMove(row: number, col: number): boolean {
-    const directions = [
-      { row: -1, col: 0 },
-      { row: 1, col: 0 },
-      { row: 0, col: -1 },
-      { row: 0, col: 1 },
-      { row: -1, col: -1 },
-      { row: -1, col: 1 },
-      { row: 1, col: -1 },
-      { row: 1, col: 1 },
-    ];
-
-    const currentPlayer = this.currentPlayer;
+    const currentPlayer: string = this.currentPlayer;
+    const directions: { row: number; col: number }[] =
+      this.getNeighborOffsets();
     for (const direction of directions) {
       let r = row + direction.row;
       let c = col + direction.col;

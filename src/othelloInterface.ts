@@ -5,6 +5,12 @@ interface OthelloInterface {
   initialize(): void;
 
   /**
+   * Gets the neighbor offsets.
+   * @returns { row: number; col: number }[]
+   */
+  getNeighborOffsets(): { row: number; col: number }[];
+
+  /**
    * Makes a move on the game board.
    * @param row The row of the move.
    * @param col The column of the move.
