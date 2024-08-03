@@ -7,12 +7,21 @@
     <title>オセロ</title>
   </head>
   <body>
-    <div class="container">
-      <main class="container">
-        <h1 class="text-lg">オセロ</h1>
+    <div class="container mx-auto py-4">
+      <main class="container mt-3">
+        <h1 class="text-lg text-xl">オセロ</h1>
+        <div
+          class="p-4 my-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400"
+          role="alert"
+        >
+          <p>
+            <span id="black-count">現在のターン</span> : <span id="white-count"></span>
+            <span id="current-player"></span>
+          </p>
+        </div>
         <div id="board" class="board"></div>
-        <div>
-          <button id="reset" class="bg-gray-400 rounded">リセット</button>
+        <div class="mt-4">
+          <button id="reset" class="bg-gray-300 rounded px-2 py-1">リセット</button>
         </div>
       </main>
     </div>
