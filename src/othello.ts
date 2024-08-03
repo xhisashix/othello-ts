@@ -38,20 +38,6 @@ class othello implements OthelloInterface {
     if (this.board[row][col] === "") {
       this.flip(row, col);
       this.currentPlayer = this.currentPlayer === "B" ? "W" : "B";
-
-      const validMoves = this.getValidMoves();
-      if (validMoves.length === 0) {
-        this.currentPlayer = this.currentPlayer === "B" ? "W" : "B";
-        const nextValidMoves = this.getValidMoves();
-        if (nextValidMoves.length === 0) {
-          const blackCount = this.board.flat().filter((cell) => cell === "B")
-            .length;
-          const whiteCount = this.board.flat().filter((cell) => cell === "W")
-            .length;
-          this.winner =
-            blackCount > whiteCount ? "Black" : blackCount < whiteCount ? "White" : "Tie";
-        }
-      }
     }
   }
 
@@ -103,10 +89,14 @@ class othello implements OthelloInterface {
           cellElement.className = "cell";
           cellElement.className += cell === "" ? " empty" : ` ${cell}`;
           cellElement.innerText = cell;
-          cellElement.addEventListener("click", () => {
-            this.makeMove(rowIndex, colIndex);
-            this.render();
-          });
+
+          if (cell === "" && this.isValidMove(rowIndex, colIndex)) {
+            cellElement.className += " valid-move";
+            cellElement.addEventListener("click", () => {
+              this.makeMove(rowIndex, colIndex);
+              this.render();
+            });
+          }
           rowElement.appendChild(cellElement);
         });
         boardElement.appendChild(rowElement);
@@ -115,7 +105,11 @@ class othello implements OthelloInterface {
 
     const currentPlayerElement = document.getElementById("current-player");
     if (currentPlayerElement) {
-      currentPlayerElement.innerText = this.currentPlayer;
+      if (this.currentPlayer === "B") {
+        currentPlayerElement.innerText = "Black";
+      } else {
+        currentPlayerElement.innerText = "White";
+      }
     }
   }
 
@@ -163,27 +157,6 @@ class othello implements OthelloInterface {
     });
 
     this.board[row][col] = currentPlayer;
-  }
-
-  /**
-   * Obtains an array of positions where the player can place stones.
-   * @returns { row: number, col: number }[]
-   */
-  getValidMoves(): { row: number; col: number }[] {
-    const validMoves = [];
-    for (let row = 0; row < 8; row++) {
-      for (let col = 0; col < 8; col++) {
-        if (this.board[row][col] === "") {
-          const validMove = this.isValidMove(row, col);
-          if (validMove) {
-            validMoves.push({ row, col });
-          }
-        }
-      }
-    }
-
-    console.log(validMoves);
-    return validMoves;
   }
 
   isValidMove(row: number, col: number): boolean {

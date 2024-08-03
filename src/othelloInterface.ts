@@ -51,12 +51,6 @@ interface OthelloInterface {
   flip(row: number, col: number): void;
 
   /**
-   * Obtains an array of positions where the player can place stones.
-   * @returns { row: number, col: number }[]
-   */
-  getValidMoves(): { row: number; col: number }[];
-
-  /**
    * Determines if a move is valid.
    * @param row The row of the move.
    * @param col The column of the move.
