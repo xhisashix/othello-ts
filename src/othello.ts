@@ -186,26 +186,26 @@ class othello implements OthelloInterface {
     const directions: { row: number; col: number }[] =
       this.getNeighborOffsets();
     directions.forEach((direction) => {
-      let r = row + direction.row;
-      let c = col + direction.col;
+      let newRow = row + direction.row;
+      let newCol = col + direction.col;
       let flipped = false;
-      while (r >= 0 && r < 8 && c >= 0 && c < 8) {
-        if (this.board[r][c] === "") {
+      while (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
+        if (this.board[newRow][newCol] === "") {
           break;
         }
-        if (this.board[r][c] === currentPlayer) {
+        if (this.board[newRow][newCol] === currentPlayer) {
           if (flipped) {
-            while (r !== row || c !== col) {
-              r -= direction.row;
-              c -= direction.col;
-              this.board[r][c] = currentPlayer;
+            while (newRow !== row || newCol !== col) {
+              newRow -= direction.row;
+              newCol -= direction.col;
+              this.board[newRow][newCol] = currentPlayer;
             }
           }
           break;
         }
         flipped = true;
-        r += direction.row;
-        c += direction.col;
+        newRow += direction.row;
+        newCol += direction.col;
       }
     });
 
@@ -217,22 +217,22 @@ class othello implements OthelloInterface {
     const directions: { row: number; col: number }[] =
       this.getNeighborOffsets();
     for (const direction of directions) {
-      let r = row + direction.row;
-      let c = col + direction.col;
+      let newRow = row + direction.row;
+      let newCol = col + direction.col;
       let flipped = false;
-      while (r >= 0 && r < 8 && c >= 0 && c < 8) {
-        if (this.board[r][c] === "") {
+      while (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
+        if (this.board[newRow][newCol] === "") {
           break;
         }
-        if (this.board[r][c] === currentPlayer) {
+        if (this.board[newRow][newCol] === currentPlayer) {
           if (flipped) {
             return true;
           }
           break;
         }
         flipped = true;
-        r += direction.row;
-        c += direction.col;
+        newRow += direction.row;
+        newCol += direction.col;
       }
     }
     return false;
