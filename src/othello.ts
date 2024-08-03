@@ -54,6 +54,28 @@ class othello implements OthelloInterface {
    * @returns string | null
    */
   getWinner(): string | null {
+
+    let blackCount = 0;
+    let whiteCount = 0;
+
+    this.board.forEach((row) => {
+      row.forEach((cell) => {
+        if (cell === "B") {
+          blackCount++;
+        } else if (cell === "W") {
+          whiteCount++;
+        }
+      });
+    });
+
+    if (blackCount > whiteCount) {
+      this.winner = "Black";
+    } else if (whiteCount > blackCount) {
+      this.winner = "White";
+    } else {
+      this.winner = null;
+    }
+
     return this.winner;
   }
 
@@ -101,6 +123,15 @@ class othello implements OthelloInterface {
         });
         boardElement.appendChild(rowElement);
       });
+    }
+
+    if (this.isGameOver()) {
+      const winner = this.getWinner();
+      if (winner) {
+        alert(`Winner: ${winner}`);
+      } else {
+        alert("It's a tie!");
+      }
     }
 
     const currentPlayerElement = document.getElementById("current-player");
