@@ -4,6 +4,16 @@ class othello implements OthelloInterface {
   private board: string[][];
   private currentPlayer: string;
   private winner: string | null;
+  private static readonly neighborOffsets: { row: number; col: number }[] = [
+    { row: -1, col: 0 },
+    { row: 1, col: 0 },
+    { row: 0, col: -1 },
+    { row: 0, col: 1 },
+    { row: -1, col: -1 },
+    { row: -1, col: 1 },
+    { row: 1, col: -1 },
+    { row: 1, col: 1 },
+  ];
 
   constructor() {
     this.board = [];
@@ -27,17 +37,6 @@ class othello implements OthelloInterface {
       ["", "", "", "", "", "", "", ""],
     ];
   }
-
-  private static readonly neighborOffsets = [
-    { row: -1, col: 0 },
-    { row: 1, col: 0 },
-    { row: 0, col: -1 },
-    { row: 0, col: 1 },
-    { row: -1, col: -1 },
-    { row: -1, col: 1 },
-    { row: 1, col: -1 },
-    { row: 1, col: 1 },
-  ];
 
   /**
    * Gets the neighbor offsets.
@@ -78,10 +77,13 @@ class othello implements OthelloInterface {
 
     this.board.forEach((row) => {
       row.forEach((cell) => {
-        if (cell === "B") {
-          blackCount++;
-        } else if (cell === "W") {
-          whiteCount++;
+        switch (cell) {
+          case "B":
+            blackCount++;
+            break;
+          case "W":
+            whiteCount++;
+            break;
         }
       });
     });
@@ -118,6 +120,20 @@ class othello implements OthelloInterface {
    * @returns void
    */
   render(): void {
+    this.renderBoard();
+    this.renderCurrentPlayer();
+    this.renderPiecesCounts();
+
+    if (this.isGameOver()) {
+      this.renderWinner();
+    }
+  }
+
+  /**
+   * render the game board to the html page.
+   * @returns void
+   */
+  renderBoard(): void {
     const boardElement = document.getElementById("board");
     if (boardElement) {
       boardElement.innerHTML = "";
@@ -142,16 +158,13 @@ class othello implements OthelloInterface {
         boardElement.appendChild(rowElement);
       });
     }
+  }
 
-    if (this.isGameOver()) {
-      const winner = this.getWinner();
-      if (winner) {
-        alert(`Winner: ${winner}`);
-      } else {
-        alert("It's a tie!");
-      }
-    }
-
+  /**
+   * render the current player to the html page.
+   * @returns void
+   */
+  renderCurrentPlayer(): void {
     const currentPlayerElement = document.getElementById("current-player");
     if (currentPlayerElement) {
       if (this.currentPlayer === "B") {
@@ -160,18 +173,36 @@ class othello implements OthelloInterface {
         currentPlayerElement.innerText = "White";
       }
     }
+  }
 
+  /**
+   * render the pieces counts to the html page.
+   * @returns void
+   */
+  renderPiecesCounts(): void {
     const [blackCount, whiteCount] = this.countPieces();
-
     const blackCountElement = document.getElementById("black-count");
+    const whiteCountElement = document.getElementById("white-count");
+
     if (blackCountElement) {
       blackCountElement.innerText = blackCount.toString();
     }
 
-    const whiteCountElement = document.getElementById("white-count");
-
     if (whiteCountElement) {
       whiteCountElement.innerText = whiteCount.toString();
+    }
+  }
+
+  /**
+   * render the winner to the html page.
+   * @returns void
+   */
+  renderWinner(): void {
+    const winner = this.getWinner();
+    if (winner) {
+      alert(`Winner: ${winner}`);
+    } else {
+      alert("It's a tie!");
     }
   }
 

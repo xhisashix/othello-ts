@@ -43,10 +43,34 @@ interface OthelloInterface {
   getBoard(): string[][];
 
   /**
-   * Outputs the game board to the html page.
+   * Outputs the html page.
    * @returns void
    */
   render(): void;
+
+  /**
+   * render the game board to the html page.
+   * @returns void
+   */
+  renderBoard(): void;
+
+  /**
+   * render the current player to the html page.
+   * @returns void
+   */
+  renderCurrentPlayer(): void;
+
+  /**
+   * render the pieces counts to the html page.
+   * @returns void
+   */
+  renderPiecesCounts(): void;
+
+  /**
+   * render the winner to the html page.
+   * @returns void
+   */
+  renderWinner(): void;
 
   /**
    * Flipping Othello frames
