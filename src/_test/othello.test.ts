@@ -115,3 +115,65 @@ describe("makeMove", () => {
     expect(game.getBoard()).toEqual(expectedBoard);
   });
 });
+
+describe("isGameOver", () => {
+  it("should return false for a new game", () => {
+    const game = new othello();
+    game.initialize();
+    expect(game.isGameOver()).toBe(false);
+  });
+
+  it("should return true when the board is full", () => {
+    const game = new othello();
+    game.initialize();
+    game.getBoard().forEach((row, rowIndex) => {
+      row.forEach((_, colIndex) => {
+        game.getBoard()[rowIndex][colIndex] = rowIndex % 2 === 0 ? "B" : "W";
+      });
+    });
+    expect(game.isGameOver()).toBe(true);
+  });
+
+  it("should return false when the board is partially filled", () => {
+    const game = new othello();
+    game.initialize();
+    game.getBoard()[0][0] = "B";
+    game.getBoard()[0][1] = "W";
+    expect(game.isGameOver()).toBe(false);
+  });
+});
+
+describe("getWinner", () => {
+  it("should return 'Black' when Black has more pieces", () => {
+    const game = new othello();
+    game.initialize();
+    game.makeMove(2, 3); // Assuming this is a valid move for Black
+    game.makeMove(2, 4); // Assuming this is a valid move for White
+    game.makeMove(2, 5); // Assuming this is a valid move for Black
+
+    expect(game.getWinner()).toBe("Black");
+  });
+
+  it("should return 'White' when White has more pieces", () => {
+    const game = new othello();
+    game.initialize();
+    game.makeMove(2, 3); // Assuming this is a valid move for Black
+    game.makeMove(2, 4); // Assuming this is a valid move for White
+    game.makeMove(3, 5); // Assuming this is a valid move for Black
+    game.makeMove(4, 2); // Assuming this is a valid move for White
+
+    expect(game.getWinner()).toBe("White");
+  });
+
+  it("should return null when there is a tie", () => {
+    const game = new othello();
+    game.initialize();
+    // Manually set the board to a tie state
+    game.getBoard()[3][3] = "B";
+    game.getBoard()[3][4] = "W";
+    game.getBoard()[4][3] = "W";
+    game.getBoard()[4][4] = "B";
+
+    expect(game.getWinner()).toBeNull();
+  });
+});
