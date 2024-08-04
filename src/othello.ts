@@ -53,6 +53,10 @@ class othello implements OthelloInterface {
    * @returns void
    */
   makeMove(row: number, col: number): void {
+    if (!this.isValidMove(row, col)) {
+      return;
+    }
+
     if (this.board[row][col] === "") {
       this.flip(row, col);
       this.currentPlayer = this.currentPlayer === "B" ? "W" : "B";
